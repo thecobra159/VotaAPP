@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import java.io.IOException;
 
@@ -15,7 +14,6 @@ public class InitialScreen extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private EditText editTextAuth, editTextPass;
     private String auth, pass;
-    private ProgressBar progressLogin;
 
     private void showProgressDialog() {
         progressDialog = new ProgressDialog(this);
@@ -32,7 +30,6 @@ public class InitialScreen extends AppCompatActivity {
         setContentView(R.layout.initial_screen);
         editTextAuth = findViewById(R.id.editTextAuth);
         editTextPass = findViewById(R.id.editTextPass);
-        progressLogin = findViewById(R.id.progressLogin);
     }
 
     public void connectServer(View view) {
@@ -63,7 +60,7 @@ public class InitialScreen extends AppCompatActivity {
                     }
                 };
             }
-            new GetPostTask(progressLogin, this, Constants.LOGIN).execute(auth, pass);
+            new GetPostTask(this, Constants.LOGIN).execute(auth, pass);
         } else {
             Controller.getInstance().alertMessage(getApplication(), "Auth deve conter 12 chars\nPass deve ser maior que 4 chars");
         }

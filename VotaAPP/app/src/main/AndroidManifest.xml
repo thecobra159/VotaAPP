@@ -28,7 +28,7 @@
         </provider>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".InitialScreen"
             android:label="I'm UPP"
             >
 
@@ -40,7 +40,7 @@
         </activity>
 
         <activity
-            android:name=".InitialScreen"
+            android:name=".MainActivity"
             android:label="Conexão com o Servidor"
             >
 

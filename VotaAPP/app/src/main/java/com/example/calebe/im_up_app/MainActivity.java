@@ -8,14 +8,13 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED)
         {
             ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity
             {
                 Log.d("OnClickListView", ""+images_stored.get(position).getName());
 
-                Controller.getInstance().setImageClicked(images_stored.get(position));
+                //Controller.getInstance().setImageClicked(images_stored.get(position));
                 Intent intent = new Intent(getApplicationContext(), ImageClicked.class);
                 startActivity(intent);
             }
@@ -131,9 +131,9 @@ public class MainActivity extends AppCompatActivity
                     {
                         try
                         {
-                            photoFile = FileUtils.createFile(MainActivity.this, input.getText().toString(), ".jpg");
-                            mCurrentPhotoPath = photoFile.getAbsolutePath();
-                            photoURI = FileProvider.getUriForFile(MainActivity.this, "com.example.calebe.im_up_app.fileprovider", photoFile);
+                            //photoFile = FileUtils.createFile(MainActivity.this, input.getText().toString(), ".jpg");
+                            //mCurrentPhotoPath = photoFile.getAbsolutePath();
+                            //photoURI = FileProvider.getUriForFile(MainActivity.this, "com.example.calebe.im_up_app.fileprovider", photoFile);
                             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                             startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
                         }
