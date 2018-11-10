@@ -127,6 +127,14 @@ public class GetPostTask extends AsyncTask<String, Void, Boolean>
                             {
                                 result = true;
                                 Controller.getInstance().alertMessage(context, "Login feito com sucesso!");
+                                if(response.getString("votou").equals("1"))
+                                {
+                                    Controller.getInstance().setUserVotou(true);
+                                }
+                                else
+                                {
+                                    Controller.getInstance().setUserVotou(false);
+                                }
                                 Intent intent = new Intent(context, MainActivity.class);
                                 context.startActivity(intent);
                                 context.finish();

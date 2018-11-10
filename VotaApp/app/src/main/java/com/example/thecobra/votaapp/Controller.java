@@ -17,6 +17,7 @@ class Controller {
     private final String urlServerMayor = "http://kairos-dev.tk/api/candidatos/prefeito";
     private final String urlServerVote = "http://kairos-dev.tk/api/votar";
     private String userAuth, userPass;
+    private boolean  userVotou = false;
     private JSONObject votedCounciler, votedMayor;
     private ArrayList<JSONObject> councilers = new ArrayList<JSONObject>();
     private ArrayList<JSONObject> mayors = new ArrayList<JSONObject>();
@@ -33,6 +34,11 @@ class Controller {
         if (ourInstance == null) { ourInstance = new Controller(); }
         return ourInstance;
     }
+
+    public void setUserVotou(boolean aux) { this.userVotou = aux; }
+
+    public boolean getUserVotou() { return this.userVotou; }
+
     public JSONObject makeVote (String idCouncilor, String idMayor) throws JSONException {
         JSONObject jsonVote = new JSONObject();
 

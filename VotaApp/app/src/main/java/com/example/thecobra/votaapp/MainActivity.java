@@ -44,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
 
         AndroidNetworking.initialize(this);
 
+        if( Controller.getInstance().getUserVotou())
+        {
+            btnCouncilor.setEnabled(false);
+            btnMayor.setEnabled(false);
+            btnVote.setEnabled(false);
+        }
+
         btnCouncilor.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -117,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume()
     {
         super.onResume();
-
         if(Controller.getInstance().isReadyToVote_councilers())
         {
             try
