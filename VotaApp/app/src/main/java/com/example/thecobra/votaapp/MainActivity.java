@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     // POST
                     String id_vereador = null, id_prefeito = null;
+                    Controller.getInstance().createProgressDialog(MainActivity.this, "Validando Voto...", "Enviando o seu voto para o servidor!", false);
                     try
                     {
                         id_vereador = Controller.getInstance().getCouncilersClicked().getString("_id");
@@ -97,8 +98,25 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void onResponse(JSONObject response)
                                     {
-                                        Controller.getInstance().alertMessage(getApplication(), response.toString());
-                                        btnVote.setEnabled(false);
+                                        Controller.getInstance().destroyProgressDialog();
+                                        try
+                                        {
+                                            if(response.getString("status").equals("true"))
+                                            {
+                                                Controller.getInstance().createAlertDialog(MainActivity.this, "Voto Confirmado com Sucesso", null, false);
+                                                btnCouncilor.setEnabled(false);
+                                                btnMayor.setEnabled(false);
+                                                btnVote.setEnabled(false);
+                                            }
+                                            else
+                                            {
+                                                Controller.getInstance().createAlertDialog(MainActivity.this, "ERRO!", "Houve um problema ao confirmar o seu voto, tente mais tarde!", false);
+                                            }
+                                        }
+                                        catch (JSONException e)
+                                        {
+                                            e.printStackTrace();
+                                        }
                                     }
 
                                     @Override
@@ -114,7 +132,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Controller.getInstance().alertMessage(getApplication(), "Você precisa escolher seus candidatos!");
+                    Controller.getInstance().createAlertDialog(MainActivity.this, "Complete sua Escolha!", "Você precisa escolher seus candidatos!", false);
+//                    Controller.getInstance().alertMessage(getApplication(), "Você precisa escolher seus candidatos!");
                 }
             }
         });

@@ -27,7 +27,7 @@ public class MayorActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mayor);
         AndroidNetworking.initialize(MayorActivity.this);
-
+        Controller.getInstance().createProgressDialog(MayorActivity.this, "Aguarde...", "Carregando Candidatos", false);
         try
         {
             AndroidNetworking.get(Controller.getInstance().getMayorURL())
@@ -56,6 +56,7 @@ public class MayorActivity extends AppCompatActivity
                                         finish();
                                     }
                                 });
+                                Controller.getInstance().destroyProgressDialog();
                             }
                         }
                         @Override

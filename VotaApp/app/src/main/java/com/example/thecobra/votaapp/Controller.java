@@ -1,6 +1,9 @@
 package com.example.thecobra.votaapp;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -26,6 +29,9 @@ class Controller {
 
     private boolean readyToVote_mayor = false;
     private boolean readyToVote_councilers = false;
+    private ProgressDialog progressDialog = null;
+    private AlertDialog.Builder alertDialogBuilder = null;
+    private AlertDialog alertDialog = null;
 
     private Boolean status = false;
 
@@ -33,6 +39,42 @@ class Controller {
     {
         if (ourInstance == null) { ourInstance = new Controller(); }
         return ourInstance;
+    }
+
+    public void createProgressDialog(Context context, String title, String message, boolean cancelable)
+    {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(cancelable);
+        progressDialog.setTitle(title);
+        progressDialog.setMessage(message);
+        progressDialog.show();
+    }
+
+    public void destroyProgressDialog()
+    {
+        progressDialog.dismiss();
+        progressDialog = null;
+    }
+
+    public void createAlertDialog(Context context, String title, String message, boolean cancelable)
+    {
+        alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setMessage(message);
+        alertDialogBuilder.setCancelable(cancelable);
+        alertDialogBuilder.setNeutralButton(android.R.string.ok,
+                new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id) {
+                        alertDialog.cancel();
+                        alertDialog = null;
+                        alertDialogBuilder = null;
+                    }
+                });
+
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     public void setUserVotou(boolean aux) { this.userVotou = aux; }

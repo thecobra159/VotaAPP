@@ -26,6 +26,7 @@ public class CouncilorActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_councilor);
         AndroidNetworking.initialize(CouncilorActivity.this);
+        Controller.getInstance().createProgressDialog(CouncilorActivity.this, "Aguarde...", "Carregando Candidatos", false);
         try
         {
             AndroidNetworking.get(Controller.getInstance().getCouncilorURL())
@@ -55,6 +56,7 @@ public class CouncilorActivity extends AppCompatActivity
                                         finish();
                                     }
                                 });
+                                Controller.getInstance().destroyProgressDialog();
                             }
                         }
                         @Override
