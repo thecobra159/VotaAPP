@@ -54,7 +54,7 @@ public class MayorActivity extends AppCompatActivity
                                         Controller.getInstance().setMayorsClicked(adapter.getItem(position));
                                         Intent intent = new Intent(getApplicationContext(), MayorToVoteActivity.class);
                                         startActivity(intent);
-                                        finish();
+//                                        finish();
                                     }
                                 });
                                 Controller.getInstance().destroyProgressDialog();
@@ -82,5 +82,9 @@ public class MayorActivity extends AppCompatActivity
 //        {
 //            finish();
 //        }
+    }
+
+    public void returnToMain(View view) {
+        finish();
     }
 }

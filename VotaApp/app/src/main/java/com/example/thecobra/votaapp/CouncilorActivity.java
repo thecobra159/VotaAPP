@@ -54,7 +54,7 @@ public class CouncilorActivity extends AppCompatActivity
                                         Controller.getInstance().setCouncilersClicked(adapter.getItem(position));
                                         Intent intent = new Intent(getApplicationContext(), CouncilorToVoteActivity.class);
                                         startActivity(intent);
-                                        finish();
+//                                        finish();
                                     }
                                 });
                                 Controller.getInstance().destroyProgressDialog();
@@ -77,5 +77,9 @@ public class CouncilorActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
+    }
+
+    public void returnToMain(View view) {
+        finish();
     }
 }

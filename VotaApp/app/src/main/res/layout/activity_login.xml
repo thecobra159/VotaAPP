@@ -24,7 +24,7 @@
         android:ems="10"
         android:hint="@string/prompt_auth"
         android:inputType="number"
-        android:text="132509520302"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
         android:id="@+id/editTextPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginSmtart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="8dp"
@@ -41,11 +41,11 @@
         android:ems="10"
         android:hint="@string/prompt_password"
         android:inputType="textPassword"
-        android:text="riorj2018"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextAuth"
-        tools:text="spcsp2018" />
+        />
 
     <Button
         android:id="@+id/btnLogin"
