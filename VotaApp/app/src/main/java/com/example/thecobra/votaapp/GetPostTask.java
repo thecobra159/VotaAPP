@@ -130,6 +130,17 @@ public class GetPostTask extends AsyncTask<String, Void, Boolean>
                                 if(response.getString("votou").equals("1"))
                                 {
                                     Controller.getInstance().setUserVotou(true);
+                                    // TODO https://github.com/thecobra159/VotaAPP/issues/5
+                                    try
+                                    {
+                                        Controller.getInstance().setCouncilersClicked(response.getJSONObject("vereador"));
+                                        Controller.getInstance().setMayorsClicked(response.getJSONObject("prefeito"));
+                                        Log.d("VEREADOR", response.getJSONObject("vereador").toString());
+                                    }
+                                    catch (JSONException e)
+                                    {
+                                        e.printStackTrace();
+                                    }
                                 }
                                 else
                                 {

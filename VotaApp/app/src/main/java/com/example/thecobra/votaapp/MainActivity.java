@@ -1,5 +1,7 @@
 package com.example.thecobra.votaapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgCouncilor, imgMayor;
     private Button btnCouncilor, btnMayor, btnVote;
     private TextView mayorParty, mayorName, councilorName, councilorParty;
+    private AlertDialog alertDialog = null;
+    private AlertDialog alertDialog1 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,6 +53,24 @@ public class MainActivity extends AppCompatActivity {
             btnCouncilor.setEnabled(false);
             btnMayor.setEnabled(false);
             btnVote.setEnabled(false);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Você já votou!");
+            alertDialogBuilder.setMessage("Você já participou do pleito eleitoral! Obrigado pelo seu voto! ");
+            alertDialogBuilder.setCancelable(false);
+            alertDialogBuilder.setNeutralButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+
+            alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
         }
 
         btnCouncilor.setOnClickListener(new View.OnClickListener()
@@ -103,7 +125,30 @@ public class MainActivity extends AppCompatActivity {
                                         {
                                             if(response.getString("status").equals("true"))
                                             {
-                                                Controller.getInstance().createAlertDialog(MainActivity.this, "Voto Confirmado com Sucesso", null, false);
+//                                                AlertDialog dialog = Controller.getInstance().createAlertDialog(MainActivity.this, "Voto Confirmado com Sucesso", null, false);
+
+                                                AlertDialog.Builder alertDialogBuilder1 = new AlertDialog.Builder(MainActivity.this);
+                                                alertDialogBuilder1.setTitle("Voto Confirmado com Sucesso");
+                                                alertDialogBuilder1.setMessage("Você será redirecionado para tela de login! Obrigado pelo seu voto!");
+                                                alertDialogBuilder1.setCancelable(false);
+                                                alertDialogBuilder1.setNeutralButton(android.R.string.ok,
+                                                        new DialogInterface.OnClickListener()
+                                                        {
+                                                            public void onClick(DialogInterface dialog, int id) {
+                                                                alertDialog1.dismiss();
+                                                                Controller.getInstance().setMayorsClicked(null);
+                                                                Controller.getInstance().setCouncilersClicked(null);
+                                                                Controller.getInstance().setReadyToVote_mayor(false);
+                                                                Controller.getInstance().setReadyToVote_councilers(false);
+                                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                                startActivity(intent);
+                                                                finish();
+                                                            }
+                                                        });
+
+                                                alertDialog1 = alertDialogBuilder1.create();
+                                                alertDialog1.show();
+
                                                 btnCouncilor.setEnabled(false);
                                                 btnMayor.setEnabled(false);
                                                 btnVote.setEnabled(false);

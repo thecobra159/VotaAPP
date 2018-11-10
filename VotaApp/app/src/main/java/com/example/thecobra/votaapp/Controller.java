@@ -57,7 +57,7 @@ class Controller {
         progressDialog = null;
     }
 
-    public void createAlertDialog(Context context, String title, String message, boolean cancelable)
+    public AlertDialog createAlertDialog(final Context context, String title, String message, boolean cancelable)
     {
         alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
@@ -67,7 +67,7 @@ class Controller {
                 new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int id) {
-                        alertDialog.cancel();
+                        alertDialog.dismiss();
                         alertDialog = null;
                         alertDialogBuilder = null;
                     }
@@ -75,6 +75,7 @@ class Controller {
 
         alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+        return alertDialog;
     }
 
     public void setUserVotou(boolean aux) { this.userVotou = aux; }
