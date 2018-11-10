@@ -24,7 +24,7 @@
         android:ems="10"
         android:hint="@string/prompt_auth"
         android:inputType="number"
-        android:text="123412341234"
+        android:text="132509520302"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
         android:ems="10"
         android:hint="@string/prompt_password"
         android:inputType="textPassword"
-        android:text="spcsp2018"
+        android:text="riorj2018"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextAuth"

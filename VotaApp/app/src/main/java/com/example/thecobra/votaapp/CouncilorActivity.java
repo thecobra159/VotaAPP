@@ -25,6 +25,7 @@ public class CouncilorActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_councilor);
+        Controller.getInstance().clearCouncilers();
         AndroidNetworking.initialize(CouncilorActivity.this);
         Controller.getInstance().createProgressDialog(CouncilorActivity.this, "Aguarde...", "Carregando Candidatos", false);
         try

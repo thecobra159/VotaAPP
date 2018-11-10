@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         {
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
+                            Controller.getInstance().clear();
                             finish();
                         }
                     });
@@ -142,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                                                                 Controller.getInstance().setReadyToVote_councilers(false);
                                                                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                                                 startActivity(intent);
+                                                                Controller.getInstance().clear();
                                                                 finish();
                                                             }
                                                         });
@@ -220,6 +222,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void exitAPP(View view) {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        Controller.getInstance().clear();
         finish();
     }
 }

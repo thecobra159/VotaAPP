@@ -41,6 +41,26 @@ class Controller {
         return ourInstance;
     }
 
+    public void clear()
+    {
+        this.ourInstance = null;
+//        this.userAuth = null;
+//        this.userPass = null;
+//        this.userVotou = false;
+        this.votedCounciler = null;
+        this.votedMayor = null;
+        this.councilers.clear();
+        this.mayors.clear();;
+        this.mayorsClicked = null;
+        this.councilersClicked = null;
+        this.readyToVote_mayor = false;
+        this.readyToVote_councilers = false;
+        this.progressDialog = null;
+        this.alertDialogBuilder = null;
+        this.alertDialog = null;
+        this.status = null;
+    }
+
     public void createProgressDialog(Context context, String title, String message, boolean cancelable)
     {
         progressDialog = new ProgressDialog(context);
@@ -121,6 +141,16 @@ class Controller {
         {
             try { councilers.add(aux.getJSONObject(index)); } catch (JSONException e) { e.printStackTrace(); }
         }
+    }
+
+    public void clearCouncilers()
+    {
+        this.councilers.clear();
+    }
+
+    public void clearMayors()
+    {
+        this.mayors.clear();
     }
 
     public void setMayors(JSONArray aux)
