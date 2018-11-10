@@ -45,36 +45,43 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgressDialog();
+//                showProgressDialog();
                 auth = textAuth.getText().toString();
                 pass = textPass.getText().toString();
                 if (isAuthValid(auth) && isPasswordValid(pass)) {
                     Controller.getInstance().setUserAuth(auth);
                     Controller.getInstance().setUserPass(pass);
-                    Controller.getInstance().alertMessage(getApplication(), "Realizando busca");
+                    // TODO armazenar o resultado do AUTH na controller, verificar posterior mente e matar essa activity.
+//                    Controller.getInstance().alertMessage(getApplication(), "Realizando busca");
                     if (executeCommand()) {
-                        Runnable progressRunnable = new Runnable() {
-
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                                finish();
-                            }
-                        };
+                        Controller.getInstance().alertMessage(getApplication(), "Servidor fora do AR! Tente novamente mais tarde!");
+//                        Runnable progressRunnable = new Runnable() {
+//
+//                            @Override
+//                            public void run() {
+//                                progressDialog.dismiss();
+//                                finish();
+//                            }
+//                        };
                     } else {
-                        Runnable progressRunnable = new Runnable() {
+                        new GetPostTask(LoginActivity.this, Constants.LOGIN, progressDialog).execute(auth, pass);
+//                        textAuth.setBackgroundColor(Color.parseColor("#ff0000"));
+//                        textPass.setBackgroundColor(Color.parseColor("#ff0000"));
 
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                                textAuth.setBackgroundColor(Color.parseColor("#ff0000"));
-                                textPass.setBackgroundColor(Color.parseColor("#ff0000"));
-                            }
-                        };
+//                        Runnable progressRunnable = new Runnable() {
+//
+//                            @Override
+//                            public void run() {
+//                                progressDialog.dismiss();
+//                                textAuth.setBackgroundColor(Color.parseColor("#ff0000"));
+//                                textPass.setBackgroundColor(Color.parseColor("#ff0000"));
+//                            }
+//                        };
                     }
-                    new GetPostTask(LoginActivity.this, Constants.LOGIN).execute(auth, pass);
                 } else {
                     Controller.getInstance().alertMessage(getApplication(), "Auth deve conter 12 chars\nPass deve ser maior que 4 chars");
+                    textAuth.setBackgroundColor(Color.parseColor("#ff0000"));
+                    textPass.setBackgroundColor(Color.parseColor("#ff0000"));
                 }
             }
         });

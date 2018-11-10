@@ -24,6 +24,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".CouncilorActivity" />
         <activity android:name=".MayorActivity"></activity>
+        <activity android:name=".CouncilorToVoteActivity"></activity>
+        <activity android:name=".MayorToVoteActivity"></activity>
     </application>
 
 </manifest>

@@ -7,6 +7,12 @@ public class Candidate {
     private Bitmap photo;
     private int id;
 
+    public Candidate(String name, String party, Bitmap photo) {
+        this.name   = name;
+        this.party  = party;
+        this.photo  = photo;
+    }
+
     public String getName() { return name; }
 
     public int getId() { return id; }

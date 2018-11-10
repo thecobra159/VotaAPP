@@ -1,6 +1,7 @@
 package com.example.thecobra.votaapp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -24,59 +25,87 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GetPostTask extends AsyncTask<String, Void, Boolean> {
+public class GetPostTask extends AsyncTask<String, Void, Boolean>
+{
 
     private final Activity context;
     private int what;
     private HashMap<String, String> post;
     private Boolean result = false;
+    private ProgressDialog progressDialog;
 
-    public GetPostTask(Activity context, int what) {
+    public GetPostTask(Activity context, int what, ProgressDialog progressDialog)
+    {
         this.context = context;
         this.what = what;
         this.post = new HashMap<>();
+        this.progressDialog = progressDialog;
 
         AndroidNetworking.initialize(context);
+        showProgressDialog();
+    }
+
+
+    private void showProgressDialog()
+    {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Aguarde ...");
+        progressDialog.setMessage("Conectando ao Servidor ...");
     }
 
     @Override
-    protected void onPreExecute() {
+    protected void onPreExecute()
+    {
+        progressDialog.show();
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(Boolean result)
+    {
+
     }
 
     @Override
-    protected Boolean doInBackground(String... strings) {
+    protected Boolean doInBackground(String... strings)
+    {
         result = false;
         HttpHandler httpHandler = new HttpHandler();
-        try {
-            switch (what) {
+        try
+        {
+            switch (what)
+            {
                 case Constants.LOGIN:
                     LoginJson(httpHandler);
                     break;
                 case Constants.MAYOR:
-                    CandidateJson(httpHandler);
+//                    CandidateJson(httpHandler);
+                    getMayorsCandidates();
                     break;
                 case Constants.COUNCILOR:
-                    CandidateJson(httpHandler);
+//                    CandidateJson(httpHandler);
+                    getCouncilorsCandidates();
                     break;
                 case Constants.VOTE:
                     VoteJson(httpHandler);
                     break;
             }
-        } catch (JSONException e) {
+        }
+        catch (JSONException e)
+        {
             e.printStackTrace();
         }
         return result;
     }
 
-    private void VoteJson(HttpHandler httpHandler) {
+    private void VoteJson(HttpHandler httpHandler)
+    {
 
     }
 
-    private void LoginJson(HttpHandler httpHandler) throws JSONException {
+    private void LoginJson(HttpHandler httpHandler) throws JSONException
+    {
         JSONObject loginJson = new JSONObject();
 
         loginJson.put("username", Controller.getInstance().getUserAuth());
@@ -86,23 +115,32 @@ public class GetPostTask extends AsyncTask<String, Void, Boolean> {
                 .addJSONObjectBody(loginJson)
                 .setPriority(Priority.MEDIUM)
                 .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
+                .getAsJSONObject(new JSONObjectRequestListener()
+                {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        try {
+                    public void onResponse(JSONObject response)
+                    {
+                        try
+                        {
                             String responseJson = response.getString("auth");
-                            if (responseJson.equals("true")) {
+                            if (responseJson.equals("true"))
+                            {
                                 result = true;
                                 Controller.getInstance().alertMessage(context, "Login feito com sucesso!");
                                 Intent intent = new Intent(context, MainActivity.class);
                                 context.startActivity(intent);
                                 context.finish();
-                            } else {
+                                progressDialog.dismiss();
+                            }
+                            else {
                                 result = false;
+                                progressDialog.dismiss();
                                 Controller.getInstance().alertMessage(context, "Login inválido!");
                             }
                             Controller.getInstance().setStatus(result);
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e)
+                        {
                             e.printStackTrace();
                         }
                     }
@@ -114,33 +152,107 @@ public class GetPostTask extends AsyncTask<String, Void, Boolean> {
                 });
     }
 
-    private void CandidateJson(HttpHandler httpHandler) {
+    private void getCouncilorsCandidates()
+    {
+        try
+        {
+            AndroidNetworking.get(Controller.getInstance().getCouncilorURL())
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONArray(new JSONArrayRequestListener()
+                    {
+                        @Override
+                        public void onResponse(JSONArray response)
+                        {
+                            Log.d("HTTP", response.toString());
+                            if( response != null)
+                            {
+                                Controller.getInstance().setCouncilers(response);
+                                progressDialog.dismiss();
+                            }
+                        }
+                        @Override
+                        public void onError(ANError anError)
+                        {
+
+                        }
+                    });
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void getMayorsCandidates()
+    {
+        try
+        {
+            AndroidNetworking.get(Controller.getInstance().getMayorURL())
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONArray(new JSONArrayRequestListener()
+                    {
+                        @Override
+                        public void onResponse(JSONArray response)
+                        {
+                            Log.d("HTTP", response.toString());
+                            if( response != null)
+                            {
+                                Controller.getInstance().setMayors(response);
+                                progressDialog.dismiss();
+                            }
+                        }
+                        @Override
+                        public void onError(ANError anError)
+                        {
+
+                        }
+                    });
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void CandidateJson(HttpHandler httpHandler)
+    {
         String jsonStr;
         if (what == Constants.COUNCILOR)
             jsonStr = httpHandler.getCandidate(Controller.getInstance().getCouncilorURL());
         else
             jsonStr = httpHandler.getCandidate(Controller.getInstance().getMayorURL());
-        if (jsonStr != null) {
-            AndroidNetworking.get(jsonStr)
+
+        if (jsonStr != null)
+            AndroidNetworking.get("http://www.kairos-dev.tk/api/candidatos/prefeito")
                     .setPriority(Priority.MEDIUM)
                     .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
+                    .getAsJSONArray(new JSONArrayRequestListener()
+                    {
                         @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                String name = response.getString("nome");
-                                String party = response.getString("partido");
-                                String photo = response.getString("foto");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                        public void onResponse(JSONArray response)
+                        {
+                            Log.d("HTTP", response.toString());
+                            //                            JSONArray array = response.get("");
+//                                for (JSONObject candidate : response) {
+//                                    String name = response.getString("nome");
+//                                    String party = response.getString("partido");
+//                                    String photo = response.getString("foto");
+//                                    Candidate candidate1 = new Candidate();
+//                                }
+                            if( response != null)
+                            {
+                                Controller.getInstance().setCouncilers(response);
                             }
                         }
 
                         @Override
-                        public void onError(ANError anError) {
+                        public void onError(ANError anError)
+                        {
 
                         }
                     });
-        }
     }
 }
