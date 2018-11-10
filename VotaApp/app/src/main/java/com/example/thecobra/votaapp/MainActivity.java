@@ -154,4 +154,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void exitAPP(View view) {
+        finish();
+    }
 }
