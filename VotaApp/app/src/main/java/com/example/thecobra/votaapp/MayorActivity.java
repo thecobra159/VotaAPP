@@ -53,6 +53,7 @@ public class MayorActivity extends AppCompatActivity
                                         Controller.getInstance().setMayorsClicked(adapter.getItem(position));
                                         Intent intent = new Intent(getApplicationContext(), MayorToVoteActivity.class);
                                         startActivity(intent);
+                                        finish();
                                     }
                                 });
                             }
@@ -75,9 +76,9 @@ public class MayorActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        if(Controller.getInstance().isReadyToVote_mayor())
-        {
-            finish();
-        }
+//        if(Controller.getInstance().isReadyToVote_mayor())
+//        {
+//            finish();
+//        }
     }
 }

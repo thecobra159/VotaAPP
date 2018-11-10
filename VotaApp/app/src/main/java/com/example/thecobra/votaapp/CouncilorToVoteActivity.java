@@ -45,6 +45,8 @@ public class CouncilorToVoteActivity extends AppCompatActivity
 
     public void returnToMain(View view)
     {
+        Controller.getInstance().setCouncilersClicked(null);
+        Controller.getInstance().setReadyToVote_councilers(false);
         finish();
     }
 }

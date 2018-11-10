@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                if(Controller.getInstance().isReadyToVote_mayor() && Controller.getInstance().isReadyToVote_councilers())
+                if( (Controller.getInstance().getMayorsClicked() != null) && (Controller.getInstance().getCouncilersClicked() != null) )
                 {
                     // POST
                     String id_vereador = null, id_prefeito = null;
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 Glide.with(this).load(Controller.getInstance().getCouncilersClicked().getString("foto")).into(imgCouncilor);
                 councilorName.setText(Controller.getInstance().getCouncilersClicked().getString("nome"));
                 councilorParty.setText(Controller.getInstance().getCouncilersClicked().getString("partido"));
-                btnCouncilor.setEnabled(false);
+//                btnCouncilor.setEnabled(false);
             }
             catch (JSONException e)
             {
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 Glide.with(this).load(Controller.getInstance().getMayorsClicked().getString("foto")).into(imgMayor);
                 mayorParty.setText(Controller.getInstance().getMayorsClicked().getString("partido"));
                 mayorName.setText(Controller.getInstance().getMayorsClicked().getString("nome"));
-                btnMayor.setEnabled(false);
+//                btnMayor.setEnabled(false);
             }
             catch (JSONException e)
             {

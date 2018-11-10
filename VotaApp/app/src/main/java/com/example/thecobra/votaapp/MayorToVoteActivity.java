@@ -44,6 +44,8 @@ public class MayorToVoteActivity extends AppCompatActivity
 
     public void returnToMain(View view)
     {
+        Controller.getInstance().setMayorsClicked(null);
+        Controller.getInstance().setReadyToVote_mayor(false);
         finish();
     }
 }
