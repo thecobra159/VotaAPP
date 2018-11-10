@@ -129,7 +129,7 @@ public class GetPostTask extends AsyncTask<String, Void, Boolean>
                                 Controller.getInstance().alertMessage(context, "Login feito com sucesso!");
                                 if(response.getString("votou").equals("1"))
                                 {
-                                    Controller.getInstance().setUserVotou(true);
+                                    Controller.getInstance().setUserVotou(false);
                                     // TODO https://github.com/thecobra159/VotaAPP/issues/5
                                     try
                                     {

@@ -15,42 +15,34 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 
 import org.json.JSONArray;
 
-public class MayorActivity extends AppCompatActivity
-{
+public class MayorActivity extends AppCompatActivity {
 
     private ListView listViewMayors;
     private ImagesAdapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mayor);
         Controller.getInstance().clearMayors();
         AndroidNetworking.initialize(MayorActivity.this);
         Controller.getInstance().createProgressDialog(MayorActivity.this, "Aguarde...", "Carregando Candidatos", false);
-        try
-        {
+        try {
             AndroidNetworking.get(Controller.getInstance().getMayorURL())
                     .setPriority(Priority.MEDIUM)
                     .build()
-                    .getAsJSONArray(new JSONArrayRequestListener()
-                    {
+                    .getAsJSONArray(new JSONArrayRequestListener() {
                         @Override
-                        public void onResponse(JSONArray response)
-                        {
+                        public void onResponse(JSONArray response) {
                             Log.d("HTTP", response.toString());
-                            if( response != null)
-                            {
+                            if (response != null) {
                                 Controller.getInstance().setMayors(response);
                                 listViewMayors = findViewById(R.id.listViewMayors);
                                 adapter = new ImagesAdapter(getApplicationContext(), Controller.getInstance().getMayors());
                                 listViewMayors.setAdapter(adapter);
-                                listViewMayors.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                                {
+                                listViewMayors.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                                    {
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Controller.getInstance().setMayorsClicked(adapter.getItem(position));
                                         Intent intent = new Intent(getApplicationContext(), MayorToVoteActivity.class);
                                         startActivity(intent);
@@ -60,23 +52,20 @@ public class MayorActivity extends AppCompatActivity
                                 Controller.getInstance().destroyProgressDialog();
                             }
                         }
+
                         @Override
-                        public void onError(ANError anError)
-                        {
+                        public void onError(ANError anError) {
 
                         }
                     });
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
 //        if(Controller.getInstance().isReadyToVote_mayor())
 //        {

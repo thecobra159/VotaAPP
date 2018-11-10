@@ -3,8 +3,11 @@ package com.example.thecobra.votaapp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setUpWindowAnimations();
 
         imgCouncilor = findViewById(R.id.photoCouncilor);
         btnCouncilor = findViewById(R.id.btnCouncilor);
@@ -184,6 +188,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setUpWindowAnimations() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+            getWindow().setExitTransition(slide);
+        }
     }
 
     @Override
