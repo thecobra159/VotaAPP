@@ -19,6 +19,7 @@ public class MayorToVoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.candidate_clicked);
+
         getSupportActionBar().setTitle("Escolha o Prefeito");
         this.candidateImage = findViewById(R.id.imageView);
         this.candidateName = findViewById(R.id.candidateName);

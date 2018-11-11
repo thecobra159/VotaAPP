@@ -22,14 +22,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".CouncilorActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".MayorActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".CouncilorToVoteActivity"
-            android:parentActivityName=".CouncilorActivity"/>
-        <activity android:name=".MayorToVoteActivity"
-            android:parentActivityName=".MayorActivity"/>
+        <activity android:name=".CouncilorActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".MayorActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".CouncilorToVoteActivity" android:parentActivityName=".CouncilorActivity"/>
+        <activity android:name=".MayorToVoteActivity" android:parentActivityName=".MayorActivity"/>
     </application>
 
 </manifest>

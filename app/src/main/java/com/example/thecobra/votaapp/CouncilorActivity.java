@@ -24,6 +24,7 @@ public class CouncilorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_councilor);
+
         getSupportActionBar().setTitle("Escolha o Vereador");
         Controller.getInstance().clearCouncilers();
         AndroidNetworking.initialize(CouncilorActivity.this);
@@ -48,7 +49,7 @@ public class CouncilorActivity extends AppCompatActivity {
                                         Controller.getInstance().setCouncilersClicked(adapter.getItem(position));
                                         Intent intent = new Intent(getApplicationContext(), CouncilorToVoteActivity.class);
                                         startActivity(intent);
-                                        finish();
+//                                        finish();
                                     }
                                 });
                                 Controller.getInstance().destroyProgressDialog();
@@ -68,5 +69,9 @@ public class CouncilorActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    public void returnToActivity(View view) {
+        finish();
     }
 }
