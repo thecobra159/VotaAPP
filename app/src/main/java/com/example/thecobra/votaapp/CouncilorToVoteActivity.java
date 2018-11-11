@@ -1,5 +1,6 @@
 package com.example.thecobra.votaapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -35,6 +36,8 @@ public class CouncilorToVoteActivity extends AppCompatActivity {
 
     public void selectCandidateToVote(View view) {
         Controller.getInstance().setReadyToVote_councilers(true);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         finish();
     }
 }

@@ -33,31 +33,20 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="291dp"
-        android:layout_height="301dp"
+        android:layout_height="299dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="87dp"
+        android:layout_marginBottom="89dp"
         tools:layout_editor_absoluteX="47dp"
         tools:layout_editor_absoluteY="137dp" />
-
-    <Button
-        android:id="@+id/buttonGoBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_marginBottom="21dp"
-        android:onClick="returnToMain"
-        android:text="Voltar"
-        tools:layout_editor_absoluteX="47dp"
-        tools:layout_editor_absoluteY="447dp" />
 
     <Button
         android:id="@+id/buttonVote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/imageView"
-        android:layout_alignTop="@+id/buttonGoBack"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp"
         android:onClick="selectCandidateToVote"
         android:text="CONFIRMA"
         tools:layout_editor_absoluteX="250dp"
