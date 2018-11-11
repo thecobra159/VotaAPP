@@ -10,42 +10,30 @@ import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 
-public class MayorToVoteActivity extends AppCompatActivity
-{
+public class MayorToVoteActivity extends AppCompatActivity {
     private ImageView candidateImage = null;
     private TextView candidateName = null;
     private TextView candidateParty = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.candidate_clicked);
+        getSupportActionBar().setTitle("Escolha o Prefeito");
         this.candidateImage = findViewById(R.id.imageView);
         this.candidateName = findViewById(R.id.candidateName);
         this.candidateParty = findViewById(R.id.candidateParty);
-        try
-        {
+        try {
             Glide.with(this).load(Controller.getInstance().getMayorsClicked().getString("foto")).into(this.candidateImage);
             this.candidateName.setText(Controller.getInstance().getMayorsClicked().getString("nome"));
             this.candidateParty.setText(Controller.getInstance().getMayorsClicked().getString("partido"));
-        }
-        catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public void selectCandidateToVote(View view)
-    {
+    public void selectCandidateToVote(View view) {
         Controller.getInstance().setReadyToVote_mayor(true);
-        finish();
-    }
-
-    public void returnToMain(View view)
-    {
-        Controller.getInstance().setMayorsClicked(null);
-        Controller.getInstance().setReadyToVote_mayor(false);
         finish();
     }
 }

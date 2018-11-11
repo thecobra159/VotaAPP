@@ -59,28 +59,8 @@ public class LoginActivity extends AppCompatActivity {
 //                    Controller.getInstance().alertMessage(getApplication(), "Realizando busca");
                     if (executeCommand()) {
                         Controller.getInstance().alertMessage(getApplication(), "Servidor fora do AR! Tente novamente mais tarde!");
-//                        Runnable progressRunnable = new Runnable() {
-//
-//                            @Override
-//                            public void run() {
-//                                progressDialog.dismiss();
-//                                finish();
-//                            }
-//                        };
                     } else {
                         new GetPostTask(LoginActivity.this, Constants.LOGIN, progressDialog).execute(auth, pass);
-//                        textAuth.setBackgroundColor(Color.parseColor("#ff0000"));
-//                        textPass.setBackgroundColor(Color.parseColor("#ff0000"));
-
-//                        Runnable progressRunnable = new Runnable() {
-//
-//                            @Override
-//                            public void run() {
-//                                progressDialog.dismiss();
-//                                textAuth.setBackgroundColor(Color.parseColor("#ff0000"));
-//                                textPass.setBackgroundColor(Color.parseColor("#ff0000"));
-//                            }
-//                        };
                     }
                 } else {
                     Controller.getInstance().alertMessage(getApplication(), "Auth deve conter 12 chars\nPass deve ser maior que 4 chars");

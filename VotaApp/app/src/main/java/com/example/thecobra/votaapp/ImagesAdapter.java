@@ -26,12 +26,10 @@ public class ImagesAdapter extends ArrayAdapter<JSONObject> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         JSONObject candidate = getItem(position);
 
-        if(convertView == null)
-        {
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_cell, parent, false);
         }
 
@@ -39,14 +37,11 @@ public class ImagesAdapter extends ArrayAdapter<JSONObject> {
         TextView candidate_name = (TextView) convertView.findViewById(R.id.txtNameCadidate);
         TextView candidate_party = (TextView) convertView.findViewById(R.id.txtPartyCandidate);
 
-        try
-        {
+        try {
             Glide.with(convertView).load(candidate.getString("foto")).into(listview_image);
             candidate_name.setText(candidate.getString("nome"));
             candidate_party.setText(candidate.getString("partido"));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

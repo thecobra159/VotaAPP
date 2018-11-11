@@ -24,6 +24,7 @@ public class MayorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mayor);
+        getSupportActionBar().setTitle("Escolha o Prefeito");
         Controller.getInstance().clearMayors();
         AndroidNetworking.initialize(MayorActivity.this);
         Controller.getInstance().createProgressDialog(MayorActivity.this, "Aguarde...", "Carregando Candidatos", false);
@@ -67,9 +68,5 @@ public class MayorActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        if(Controller.getInstance().isReadyToVote_mayor())
-//        {
-//            finish();
-//        }
     }
 }

@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog alertDialog1 = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUpWindowAnimations();
@@ -45,15 +44,20 @@ public class MainActivity extends AppCompatActivity {
         btnVote = findViewById(R.id.btnVote);
         imgCouncilor = findViewById(R.id.photoCouncilor);
         imgMayor = findViewById(R.id.photoMayor);
-        mayorParty = findViewById(R.id.mayorParty);
         mayorName = findViewById(R.id.mayorName);
+        mayorParty = findViewById(R.id.mayorParty);
         councilorName = findViewById(R.id.councilorName);
         councilorParty = findViewById(R.id.councilorParty);
 
+        //text view clear
+        mayorName.setText("");
+        mayorParty.setText("");
+        councilorName.setText("");
+        councilorParty.setText("");
+
         AndroidNetworking.initialize(this);
 
-        if( Controller.getInstance().getUserVotou())
-        {
+        if (Controller.getInstance().getUserVotou()) {
             btnCouncilor.setEnabled(false);
             btnMayor.setEnabled(false);
             btnVote.setEnabled(false);
@@ -63,10 +67,8 @@ public class MainActivity extends AppCompatActivity {
             alertDialogBuilder.setMessage("Você já participou do pleito eleitoral! Obrigado pelo seu voto! ");
             alertDialogBuilder.setCancelable(false);
             alertDialogBuilder.setNeutralButton(android.R.string.ok,
-                    new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int id)
-                        {
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
                             Controller.getInstance().clear();
@@ -78,38 +80,30 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
         }
 
-        btnCouncilor.setOnClickListener(new View.OnClickListener()
-        {
+        btnCouncilor.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CouncilorActivity.class);
                 startActivity(intent);
             }
         });
 
-        btnMayor.setOnClickListener(new View.OnClickListener()
-        {
+        btnMayor.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MayorActivity.class);
                 startActivity(intent);
             }
         });
 
-        btnVote.setOnClickListener(new View.OnClickListener()
-        {
+        btnVote.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if( (Controller.getInstance().getMayorsClicked() != null) && (Controller.getInstance().getCouncilersClicked() != null) )
-                {
+            public void onClick(View v) {
+                if ((Controller.getInstance().getMayorsClicked() != null) && (Controller.getInstance().getCouncilersClicked() != null)) {
                     // POST
                     String id_vereador = null, id_prefeito = null;
                     Controller.getInstance().createProgressDialog(MainActivity.this, "Validando Voto...", "Enviando o seu voto para o servidor!", false);
-                    try
-                    {
+                    try {
                         id_vereador = Controller.getInstance().getCouncilersClicked().getString("_id");
                         id_prefeito = Controller.getInstance().getMayorsClicked().getString("_id");
                         JSONObject meu_voto = Controller.getInstance().makeVote(id_prefeito, id_vereador);
@@ -120,16 +114,12 @@ public class MainActivity extends AppCompatActivity {
                                 .addJSONObjectBody(meu_voto)
                                 .setPriority(Priority.MEDIUM)
                                 .build()
-                                .getAsJSONObject(new JSONObjectRequestListener()
-                                {
+                                .getAsJSONObject(new JSONObjectRequestListener() {
                                     @Override
-                                    public void onResponse(JSONObject response)
-                                    {
+                                    public void onResponse(JSONObject response) {
                                         Controller.getInstance().destroyProgressDialog();
-                                        try
-                                        {
-                                            if(response.getString("status").equals("true"))
-                                            {
+                                        try {
+                                            if (response.getString("status").equals("true")) {
 //                                                AlertDialog dialog = Controller.getInstance().createAlertDialog(MainActivity.this, "Voto Confirmado com Sucesso", null, false);
 
                                                 AlertDialog.Builder alertDialogBuilder1 = new AlertDialog.Builder(MainActivity.this);
@@ -137,8 +127,7 @@ public class MainActivity extends AppCompatActivity {
                                                 alertDialogBuilder1.setMessage("Você será redirecionado para tela de login! Obrigado pelo seu voto!");
                                                 alertDialogBuilder1.setCancelable(false);
                                                 alertDialogBuilder1.setNeutralButton(android.R.string.ok,
-                                                        new DialogInterface.OnClickListener()
-                                                        {
+                                                        new DialogInterface.OnClickListener() {
                                                             public void onClick(DialogInterface dialog, int id) {
                                                                 alertDialog1.dismiss();
                                                                 Controller.getInstance().setMayorsClicked(null);
@@ -158,14 +147,10 @@ public class MainActivity extends AppCompatActivity {
                                                 btnCouncilor.setEnabled(false);
                                                 btnMayor.setEnabled(false);
                                                 btnVote.setEnabled(false);
-                                            }
-                                            else
-                                            {
+                                            } else {
                                                 Controller.getInstance().createAlertDialog(MainActivity.this, "ERRO!", "Houve um problema ao confirmar o seu voto, tente mais tarde!", false);
                                             }
-                                        }
-                                        catch (JSONException e)
-                                        {
+                                        } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
                                     }
@@ -175,16 +160,11 @@ public class MainActivity extends AppCompatActivity {
 
                                     }
                                 });
-                    }
-                    catch (JSONException e)
-                    {
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
-                else
-                {
+                } else {
                     Controller.getInstance().createAlertDialog(MainActivity.this, "Complete sua Escolha!", "Você precisa escolher seus candidatos!", false);
-//                    Controller.getInstance().alertMessage(getApplication(), "Você precisa escolher seus candidatos!");
                 }
             }
         });
@@ -198,35 +178,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
-        if(Controller.getInstance().isReadyToVote_councilers())
-        {
-            try
-            {
+        if (Controller.getInstance().isReadyToVote_councilers()) {
+            try {
                 Glide.with(this).load(Controller.getInstance().getCouncilersClicked().getString("foto")).into(imgCouncilor);
                 councilorName.setText(Controller.getInstance().getCouncilersClicked().getString("nome"));
                 councilorParty.setText(Controller.getInstance().getCouncilersClicked().getString("partido"));
-//                btnCouncilor.setEnabled(false);
-            }
-            catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        if (Controller.getInstance().isReadyToVote_mayor())
-        {
-            try
-            {
+        if (Controller.getInstance().isReadyToVote_mayor()) {
+            try {
                 Glide.with(this).load(Controller.getInstance().getMayorsClicked().getString("foto")).into(imgMayor);
                 mayorParty.setText(Controller.getInstance().getMayorsClicked().getString("partido"));
                 mayorName.setText(Controller.getInstance().getMayorsClicked().getString("nome"));
-//                btnMayor.setEnabled(false);
-            }
-            catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }

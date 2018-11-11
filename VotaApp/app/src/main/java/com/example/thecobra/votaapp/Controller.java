@@ -20,7 +20,7 @@ class Controller {
     private final String urlServerMayor = "http://kairos-dev.tk/api/candidatos/prefeito";
     private final String urlServerVote = "http://kairos-dev.tk/api/votar";
     private String userAuth, userPass;
-    private boolean  userVotou = false;
+    private boolean userVotou = false;
     private JSONObject votedCounciler, votedMayor;
     private ArrayList<JSONObject> councilers = new ArrayList<JSONObject>();
     private ArrayList<JSONObject> mayors = new ArrayList<JSONObject>();
@@ -35,22 +35,19 @@ class Controller {
 
     private Boolean status = false;
 
-    public static Controller getInstance()
-    {
-        if (ourInstance == null) { ourInstance = new Controller(); }
+    public static Controller getInstance() {
+        if (ourInstance == null) {
+            ourInstance = new Controller();
+        }
         return ourInstance;
     }
 
-    public void clear()
-    {
+    public void clear() {
         this.ourInstance = null;
-//        this.userAuth = null;
-//        this.userPass = null;
-//        this.userVotou = false;
         this.votedCounciler = null;
         this.votedMayor = null;
         this.councilers.clear();
-        this.mayors.clear();;
+        this.mayors.clear();
         this.mayorsClicked = null;
         this.councilersClicked = null;
         this.readyToVote_mayor = false;
@@ -61,8 +58,7 @@ class Controller {
         this.status = null;
     }
 
-    public void createProgressDialog(Context context, String title, String message, boolean cancelable)
-    {
+    public void createProgressDialog(Context context, String title, String message, boolean cancelable) {
         progressDialog = new ProgressDialog(context);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(cancelable);
@@ -71,21 +67,18 @@ class Controller {
         progressDialog.show();
     }
 
-    public void destroyProgressDialog()
-    {
+    public void destroyProgressDialog() {
         progressDialog.dismiss();
         progressDialog = null;
     }
 
-    public AlertDialog createAlertDialog(final Context context, String title, String message, boolean cancelable)
-    {
+    public AlertDialog createAlertDialog(final Context context, String title, String message, boolean cancelable) {
         alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder.setMessage(message);
         alertDialogBuilder.setCancelable(cancelable);
         alertDialogBuilder.setNeutralButton(android.R.string.ok,
-                new DialogInterface.OnClickListener()
-                {
+                new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         alertDialog.dismiss();
                         alertDialog = null;
@@ -98,11 +91,15 @@ class Controller {
         return alertDialog;
     }
 
-    public void setUserVotou(boolean aux) { this.userVotou = aux; }
+    public void setUserVotou(boolean aux) {
+        this.userVotou = aux;
+    }
 
-    public boolean getUserVotou() { return this.userVotou; }
+    public boolean getUserVotou() {
+        return this.userVotou;
+    }
 
-    public JSONObject makeVote (String idCouncilor, String idMayor) throws JSONException {
+    public JSONObject makeVote(String idCouncilor, String idMayor) throws JSONException {
         JSONObject jsonVote = new JSONObject();
 
         jsonVote.put("eleitor", userAuth);
@@ -111,6 +108,7 @@ class Controller {
 
         return jsonVote;
     }
+
     public boolean isReadyToVote_mayor() {
         return readyToVote_mayor;
     }
@@ -127,43 +125,57 @@ class Controller {
         this.readyToVote_councilers = readyToVote_councilers;
     }
 
-    public JSONObject getMayorsClicked() { return mayorsClicked; }
+    public JSONObject getMayorsClicked() {
+        return mayorsClicked;
+    }
 
-    public void setMayorsClicked(JSONObject mayorsClicked) { this.mayorsClicked = mayorsClicked; }
+    public void setMayorsClicked(JSONObject mayorsClicked) {
+        this.mayorsClicked = mayorsClicked;
+    }
 
-    public JSONObject getCouncilersClicked() { return councilersClicked; }
+    public JSONObject getCouncilersClicked() {
+        return councilersClicked;
+    }
 
-    public void setCouncilersClicked(JSONObject councilersClicked) { this.councilersClicked = councilersClicked; }
+    public void setCouncilersClicked(JSONObject councilersClicked) {
+        this.councilersClicked = councilersClicked;
+    }
 
-    public void setCouncilers(JSONArray aux)
-    {
-        for(int index = 0; index < aux.length(); index++)
-        {
-            try { councilers.add(aux.getJSONObject(index)); } catch (JSONException e) { e.printStackTrace(); }
+    public void setCouncilers(JSONArray aux) {
+        for (int index = 0; index < aux.length(); index++) {
+            try {
+                councilers.add(aux.getJSONObject(index));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void clearCouncilers()
-    {
+    public void clearCouncilers() {
         this.councilers.clear();
     }
 
-    public void clearMayors()
-    {
+    public void clearMayors() {
         this.mayors.clear();
     }
 
-    public void setMayors(JSONArray aux)
-    {
-        for(int index = 0; index < aux.length(); index++)
-        {
-            try { mayors.add(aux.getJSONObject(index)); } catch (JSONException e) { e.printStackTrace(); }
+    public void setMayors(JSONArray aux) {
+        for (int index = 0; index < aux.length(); index++) {
+            try {
+                mayors.add(aux.getJSONObject(index));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public ArrayList<JSONObject> getMayors() { return this.mayors; }
+    public ArrayList<JSONObject> getMayors() {
+        return this.mayors;
+    }
 
-    public ArrayList<JSONObject> getCouncilers() { return this.councilers; }
+    public ArrayList<JSONObject> getCouncilers() {
+        return this.councilers;
+    }
 
     public Boolean getStatus() {
         return status;
@@ -181,7 +193,9 @@ class Controller {
         return urlServerCouncilor;
     }
 
-    public String getMayorURL() { return urlServerMayor; }
+    public String getMayorURL() {
+        return urlServerMayor;
+    }
 
     public String getAuthURL() {
         return urlServerAuth;
@@ -207,7 +221,9 @@ class Controller {
         return votedCounciler;
     }
 
-    public void setVotedCounciler(JSONObject votedCounciler) { this.votedCounciler = votedCounciler; }
+    public void setVotedCounciler(JSONObject votedCounciler) {
+        this.votedCounciler = votedCounciler;
+    }
 
     public JSONObject getVotedMayor() {
         return votedMayor;

@@ -24,6 +24,7 @@ public class CouncilorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_councilor);
+        getSupportActionBar().setTitle("Escolha o Vereador");
         Controller.getInstance().clearCouncilers();
         AndroidNetworking.initialize(CouncilorActivity.this);
         Controller.getInstance().createProgressDialog(CouncilorActivity.this, "Aguarde...", "Carregando Candidatos", false);

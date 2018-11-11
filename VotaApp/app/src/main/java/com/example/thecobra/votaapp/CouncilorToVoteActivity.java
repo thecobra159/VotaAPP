@@ -10,43 +10,30 @@ import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 
-public class CouncilorToVoteActivity extends AppCompatActivity
-{
+public class CouncilorToVoteActivity extends AppCompatActivity {
     private ImageView candidateImage = null;
     private TextView candidateName = null;
     private TextView candidateParty = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.candidate_clicked);
+        getSupportActionBar().setTitle("Escolha o Vereador");
         this.candidateImage = findViewById(R.id.imageView);
         this.candidateName = findViewById(R.id.candidateName);
         this.candidateParty = findViewById(R.id.candidateParty);
-        try
-        {
+        try {
             Glide.with(this).load(Controller.getInstance().getCouncilersClicked().getString("foto")).into(this.candidateImage);
             this.candidateName.setText(Controller.getInstance().getCouncilersClicked().getString("nome"));
             this.candidateParty.setText(Controller.getInstance().getCouncilersClicked().getString("partido"));
-        }
-        catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public void selectCandidateToVote(View view)
-    {
+    public void selectCandidateToVote(View view) {
         Controller.getInstance().setReadyToVote_councilers(true);
-        finish();
-    }
-
-    public void returnToMain(View view)
-    {
-        Controller.getInstance().setCouncilersClicked(null);
-        Controller.getInstance().setReadyToVote_councilers(false);
         finish();
     }
 }
