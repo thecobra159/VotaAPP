@@ -6,7 +6,9 @@ voter registration and password alredy saved in database.
 
 ## Setup
 
-Import this project in your [Android Studio](https://developer.android.com/studio/), make sure the API 16 for Android 4.1 (Jelly Bean), build the project and pray to God. 
+This project uses [VotaAppServer](https://github.com/Calebe94/VotaAppServer) as its backend. Be sure this backend is running at http://www.kairos-dev.tk/api/ before run this app.
+
+After this verification import this project in your [Android Studio](https://developer.android.com/studio/), make sure the API 16 for Android 4.1 (Jelly Bean), build the project and pray to God. 
 
 ## Screens
 
