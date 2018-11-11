@@ -44,9 +44,6 @@ class Controller {
     public void clear()
     {
         this.ourInstance = null;
-//        this.userAuth = null;
-//        this.userPass = null;
-//        this.userVotou = false;
         this.votedCounciler = null;
         this.votedMayor = null;
         this.councilers.clear();
